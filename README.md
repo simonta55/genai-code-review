@@ -77,7 +77,7 @@ jobs:
     name: ChatGPT Code Review
     steps:
       - name: GenAI Code Review
-        uses: dlidstrom/genai-code-review@main
+        uses: dlidstrom/genai-code-review@3
         with:
           openai_api_key: ${{ secrets.OPENAI_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -92,7 +92,7 @@ jobs:
 
 In the above workflow, the `pull_request` event triggers the workflow whenever a
 pull request is opened or synchronized. The workflow runs on the ubuntu-latest
-runner and uses the `dlidstrom/chatgpt-github-actions@main` action.
+runner and uses the `dlidstrom/chatgpt-github-actions@3` action.
 
 The `OPENAI_API_KEY` is passed from the secrets context, and the `GITHUB_TOKEN` is
 also passed from the secrets context. The `github_pr_id` is passed from the
