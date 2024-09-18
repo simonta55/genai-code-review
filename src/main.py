@@ -145,7 +145,7 @@ def analyze_commit_files(github_client, openai_client, pr_id, commit, language, 
     combined_content = ""
     for file in files:
         logging.info("Processing file: %s", file.filename)
-        try
+        try:
           content = github_client.get_file_content(commit.sha, file.filename)
           combined_content += f"\n### File: {file.filename}\n```{content}```\n"
         except:
