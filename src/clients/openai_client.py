@@ -55,15 +55,30 @@ class OpenAIClient:
         """
         try:
             logging.info("Generating response from OpenAI model.")
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
-                    {"role": "system", "content": "You are an expert Developer."},
-                    {"role": "user", "content": prompt}
-                ],
-                temperature=self.temperature,
-                max_tokens=self.max_tokens
-            )
+            if "o1" not in self.model:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "system", "content": "You are an expert Developer."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=self.temperature,
+                    max_tokens=self.max_tokens
+                )
+            else:
+                response = self.client.chat.completions.create(
+                    model=self.model,
+                    messages=[
+                        {"role": "user",
+                         "content": [
+                             {
+                                 "type": "text",
+                                 "text": "You are an expert Developer. Here are the instructions: " + prompt
+                             },
+                         ]}
+                    ],
+                    max_completion_tokens=self.max_tokens
+                )
             logging.info("Response generated successfully.")
             return response.choices[0].message.content
         except Exception as e:
